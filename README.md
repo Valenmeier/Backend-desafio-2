@@ -18,5 +18,5 @@
 <h4 align="center">Agregar productos --> await use.products.addProduct(titulo,descripción,precio,imagen,stock)</h4>
 <h4 align="center">Ver todos los productos -->  await use.products.getProduct()</h4>
 <h4 align="center">Buscar producto por id --> await use.products.getProductById(id)</h4>
-<h4 align="center">Actualizar productos --> await use.products.updateProduct(id del producto, propiedad a cambiar, nuevo valor)</h4>
+<h4 align="center">Actualizar productos --> await use.products.updateProduct(id del producto, {propiedad a cambiar:"nuevo valor"}), En caso de agregar más de una utilizar coma y dentro del mismo corchete</h4>
 <h4 align="center">Eliminar productos --> await use.products.deleteProduct(id)</h4>

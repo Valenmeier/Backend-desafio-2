@@ -1,12 +1,12 @@
 const fs = require("fs");
 class ProductMananger {
   constructor(products) {
-    this.products = products;
+    this.path = products;
   }
   addProduct = async (title, description, price, thumbnail, stock, code) => {
     if ((title, description, price, thumbnail, stock, code)) {
-      if (fs.existsSync(this.products)) {
-        let info = await fs.promises.readFile(this.products, "utf-8");
+      if (fs.existsSync(this.path)) {
+        let info = await fs.promises.readFile(this.path, "utf-8");
         let result = JSON.parse(info);
         const codeCheck = result.find((el) => el.code == code);
         if (codeCheck) {
@@ -28,7 +28,7 @@ class ProductMananger {
             result.push(nuevoProducto);
 
             await fs.promises.writeFile(
-              this.products,
+              this.path,
               JSON.stringify(result, null, 2)
             );
           }
@@ -44,7 +44,7 @@ class ProductMananger {
           code,
         };
         await fs.promises.writeFile(
-          this.products,
+          this.path,
           JSON.stringify([nuevoProducto], null, 2)
         );
       }
@@ -53,8 +53,8 @@ class ProductMananger {
     }
   };
   getProduct = async () => {
-    if (fs.existsSync(this.products)) {
-      let info = await fs.promises.readFile(this.products, "utf-8");
+    if (fs.existsSync(this.path)) {
+      let info = await fs.promises.readFile(this.path, "utf-8");
       let result = JSON.parse(info);
       console.log(result);
     } else {
@@ -62,8 +62,8 @@ class ProductMananger {
     }
   };
   getProductById = async (id) => {
-    if (fs.existsSync(this.products)) {
-      let info = await fs.promises.readFile(this.products, "utf-8");
+    if (fs.existsSync(this.path)) {
+      let info = await fs.promises.readFile(this.path, "utf-8");
       let result = JSON.parse(info);
       let mostrarProducto = result.find((product) => product.id == id);
       mostrarProducto
@@ -73,19 +73,22 @@ class ProductMananger {
       console.log(`No hay ningún producto en la empresa`);
     }
   };
-  uptadeProduct = async (id, propiedad, nuevoValor) => {
-    if ((id, propiedad, nuevoValor)) {
-      if (fs.existsSync(this.products)) {
-        let info = await fs.promises.readFile(this.products, "utf-8");
+  uptadeProduct = async (id, propiedadActualizadas) => {
+    if ((id, propiedadActualizadas)) {
+      if (fs.existsSync(this.path)) {
+        let info = await fs.promises.readFile(this.path, "utf-8");
         let result = JSON.parse(info);
-        let encontrarProducto = result.findIndex(
-          (producto) => producto.id == id
-        );
-        if (encontrarProducto !== -1) {
-          result[encontrarProducto][propiedad] = nuevoValor;
+        let encontrarProducto = result.find((product) => product.id == id);
+        if (encontrarProducto) {
+          const productUpdates = result.map((product) => {
+            if (product.id == id) {
+              return { ...product, ...propiedadActualizadas };
+            }
+            return product;
+          });
           await fs.promises.writeFile(
-            this.products,
-            JSON.stringify(result, null, 2)
+            this.path,
+            JSON.stringify(productUpdates, null, 2)
           );
         } else {
           console.log(`El producto a actualizar no se ha encontrado`);
@@ -98,16 +101,13 @@ class ProductMananger {
     }
   };
   deleteProduct = async (id) => {
-    if (fs.existsSync(this.products)) {
+    if (fs.existsSync(this.path)) {
       if (id) {
-        let info = await fs.promises.readFile(this.products, "utf-8");
+        let info = await fs.promises.readFile(this.path, "utf-8");
         let result = JSON.parse(info);
         let eliminarProducto = result.filter((prod) => prod.id != id);
         result = eliminarProducto;
-        await fs.promises.writeFile(
-          this.products,
-          JSON.stringify(result, null, 2)
-        );
+        await fs.promises.writeFile(this.path, JSON.stringify(result, null, 2));
       } else {
         console.log(`Porfavor coloca el id para eliminar el producto`);
       }

@@ -28,8 +28,11 @@ let llamarMetodos = async () => {
   // //* Buscar producto por id --> use.products.getProductById(id)
   // await use.products.getProductById(2);
 
-  //* Actualizar producto --> use.products.updateProduct(id del producto,propiedad a cambiar, nuevo valor de la propiedad)
-  // await use.products.uptadeProduct(2,"title","Mochila purpura")
+  //* Actualizar producto --> use.products.updateProduct(id del producto,{propiedades a cambiar: "nuevo valor de la propiedad"}), En caso de agregar más de una utilizar coma y dentro del mismo corchete
+  // await use.products.uptadeProduct(2, {
+  //   title: "Mochila marrón",
+  //   description: "Para llevar todo lo que quieras,pero con una mochila marrón",
+  // });
 
   //* Eliminar un producto --> use.products.deleteProduct(id del producto)
   // await use.products.deleteProduct(2)
